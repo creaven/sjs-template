@@ -6,13 +6,13 @@ How to use
 ==========
 
 template:
-
+	\Template example:
 	<ul>
 		for(var i = 0; i < items.length; i++){
 			<li><a href="{items[i].link}">{items[i].text.toUpperCase()}</li>
 		}
 	<ul>
-	
+	{moro}
 js:
 
 	var sys = require('sys');
@@ -29,11 +29,12 @@ js:
 					link: 'http://mifjs.net',
 					text: 'mifjs'
 				}
-			]
+			],
+			moro: 'god'
 		});
 		sys.puts(result);
 	});
 	
 result:
 
-	<ul><li><a href="http://mootools.net">MOOTOOLS</li><li><a href="http://mifjs.net">MIFJS</li><ul>
+	Template example:<ul><li><a href="http://mootools.net">MOOTOOLS</li><li><a href="http://mifjs.net">MIFJS</li><ul>god
