@@ -1,4 +1,4 @@
-var version = '0.91';
+var version = '0.92';
 
 var cache = {};
 
@@ -10,7 +10,9 @@ this.compile = function(tpl, data){
 		var lastHtml = false;
 		var lines = tpl.split('\n').forEach(function(line){
 			if(/^\s*(<|\{|\\)/.test(line)){
-				line = line.replace(/^\\/, '').replace(/'/g, "\\'").replace(/^\s*/, '').replace(/\{(.*?)\}/g, "', $1, '");
+				line = line.replace(/^\\/, '').replace(/'/g, "\\'").replace(/^\s*/, '').replace(/\{(.*?)\}/g, function(full, match) {
+					return "', " + match.replace(/\\\'/g, "'") + ", '";
+				});
 				if(!lastHtml){
 					functionString += "\np.push('" + line;
 				}else{
@@ -31,7 +33,7 @@ this.compile = function(tpl, data){
 		} else {
 			functionString += "\n}\nreturn p.join('');";
 		}
-		var fn = new Function('data', functionString);
+		fn = new Function('data', functionString);
 		cache[tpl] = fn;
 	}
 	return fn(data);
